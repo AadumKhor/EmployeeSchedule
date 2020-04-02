@@ -21,13 +21,14 @@ import java.util.Locale;
 
 public class EMainActivity extends AppCompatActivity {
 
-    private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
     private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
 
     private RecyclerView recyclerView;
-    private ArrayList<ScheduleCard> arrayList;
+    private ArrayList<ScheduleCard> arrayList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
-    private RecyclerView.Adapter adapter;
+    private EmployeeAdapter adapter = new EmployeeAdapter(arrayList);
+    private String date = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,22 +37,57 @@ public class EMainActivity extends AppCompatActivity {
 
         final ActionBar actionBar = getSupportActionBar();
         // Setting default toolbar title to empty
-        actionBar.setTitle("Employee Schedule");
+        date = dateFormat.format(Calendar.getInstance().getTime());
+
+        actionBar.setTitle("Employee Schedule - " + date);
 
         final CompactCalendarView calendarView = findViewById(R.id.calender);
         calendarView.setUseThreeLetterAbbreviation(true);
-        final TextView textView = findViewById(R.id.textView);
 
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-                textView.setText(dateClicked.toString());
+                date = dateFormat.format(dateClicked);
+                actionBar.setTitle("Employee Schedule - " + date);
+                arrayList.clear();
+                createList();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-                textView.setText(firstDayOfNewMonth.toString());
+                date = dateFormat.format(firstDayOfNewMonth);
+                actionBar.setTitle("Employee Schedule - " + date);
+                arrayList.clear();
+                createSecondList();
+                adapter.notifyDataSetChanged();
             }
         });
+        createList();
+        buildRecyclerView();
+
+    }
+
+    private void buildRecyclerView() {
+        recyclerView = findViewById(R.id.schedule_of_this_day);
+        recyclerView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+//        adapter = new EmployeeAdapter(arrayList);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void createSecondList() {
+        arrayList.add(new ScheduleCard("Tuesday", "10am", "5pm"));
+        arrayList.add(new ScheduleCard("Tuesday", "10am", "5pm"));
+        arrayList.add(new ScheduleCard("Tuesday", "10am", "5pm"));
+        arrayList.add(new ScheduleCard("Tuesday", "10am", "5pm"));
+    }
+
+    private void createList() {
+        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
+        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
+        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
+        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
     }
 }

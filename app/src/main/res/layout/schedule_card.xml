@@ -116,7 +116,7 @@
             app:layout_constraintVertical_bias="1">
 
             <Button
-                android:id="@+id/schedule_button"
+                android:id="@+id/schedule_clock"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
@@ -138,7 +138,7 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/schedule_time_off"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="60dp"

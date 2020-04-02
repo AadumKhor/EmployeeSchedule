@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layoutDirection="ltr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="ltr"
     tools:context=".employee.EMainActivity">
 
     <com.github.sundeepk.compactcalendarview.CompactCalendarView
         android:id="@+id/calender"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:compactCalendarTargetHeight="250dp"
-        app:compactCalendarTextSize="14sp"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp"
         app:compactCalendarBackgroundColor="@android:color/white"
-        app:compactCalendarTextColor="#000000"
-        app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
         app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
         app:compactCalendarCurrentDayTextColor="@android:color/black"
+        app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
+        app:compactCalendarTargetHeight="300dp"
+        app:compactCalendarTextColor="#000000"
+        app:compactCalendarTextSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -25,13 +33,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/schedule_of_this_day"
+        android:layout_weight="2"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calender" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
