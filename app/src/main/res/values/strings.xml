@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">EmployeeManagement</string>
+    <string name="main_label">Employee Management</string>
+    <string name="employee">Employee</string>
+    <string name="manager">Manager</string>
+    <string name="enter_e_id">Enter employee id</string>
+    <string name="login">Login</string>
+    <string name="clock_in">Clock In</string>
+    <string name="time_off">Time Off</string>
+    <string name="day_of_the_week">Day of the week : </string>
+    <string name="starting_time">Starting time :</string>
+    <string name="ending_time">Ending Time :</string>
+    <string name="day_value">Day Value</string>
+    <string name="start_value">Start Value</string>
+</resources>

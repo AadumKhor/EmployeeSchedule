@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1155f2</color>
+    <color name="colorPrimaryDark">#0c389c</color>
+    <color name="colorAccent">#22f2a2</color>
+    <color name="buttonColor">#5635cc</color>
+
+<!--    timing clock in and out colors-->
+    <color name="clockIn">#03fc20</color>
+    <color name="clockOut">#ff0015</color>
+</resources>
