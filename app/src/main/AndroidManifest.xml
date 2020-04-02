@@ -9,10 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".manager.MMainActivity"
+            android:label="Manager" />
         <activity android:name=".employee.EMainActivity" />
         <activity
             android:name=".login.LoginActivity"
-
             android:label="@string/login" />
         <activity
             android:name=".MainActivity"

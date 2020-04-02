@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.silentlad.employeemanagement.data.EmployeeContract.*;
+import com.silentlad.employeemanagement.data.contracts.EmployeeContract.*;
 
 public class EmployeeHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;

@@ -1,12 +1,16 @@
 package com.silentlad.employeemanagement.data.dbhelpers;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
-import com.silentlad.employeemanagement.data.ActualTimingContract.*;
-import com.silentlad.employeemanagement.data.EmployeeContract.*;
+import com.silentlad.employeemanagement.data.contracts.ActualTimingContract.*;
+import com.silentlad.employeemanagement.data.contracts.EmployeeContract.*;
+import com.silentlad.employeemanagement.data.Result;
+
+import java.io.IOException;
 
 public class ActualTimingHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
@@ -18,7 +22,7 @@ public class ActualTimingHelper extends SQLiteOpenHelper {
             ActualTimingEntry.COLUMN_TIME_IN + " TEXT NOT NULL, "+
             ActualTimingEntry.COLUMN_TIME_OUT + " TEXT NOT NULL, "+
             " FOREIGN KEY ("+ActualTimingEntry.COLUMN_EMP_ID+") REFERENCES "+EmployeeEntry.TABLE_NAME+
-            "("+EmployeeEntry.COLUMN_ID+"));";
+            "("+ActualTimingEntry.COLUMN_EMP_ID+"));";
 
 
     public ActualTimingHelper(@Nullable Context context) {
@@ -34,5 +38,36 @@ public class ActualTimingHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + ActualTimingEntry.TABLE_NAME);
         onCreate(db);
+    }
+
+    public Result insertData(String empId, String timeIn){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(ActualTimingEntry.COLUMN_ID, java.util.UUID.randomUUID().toString().replace("-", ""));
+        cv.put(ActualTimingEntry.COLUMN_EMP_ID, empId);
+        cv.put(ActualTimingEntry.COLUMN_TIME_IN, timeIn);
+        cv.put(ActualTimingEntry.COLUMN_TIME_OUT, "Not entered yet");
+
+        try {
+            db.insert(ActualTimingEntry.TABLE_NAME, null, cv);
+            return new Result.Success<>("Data entered to actual time db successfully");
+        }catch(Exception e){
+            return new Result.Error(new IOException(e.toString()));
+        }
+    }
+
+    public Result updateData(String empId, String outTime){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(ActualTimingEntry.COLUMN_TIME_OUT, outTime);
+
+        try{
+            db.update(ActualTimingEntry.TABLE_NAME, cv, " WHERE empId=?", new String[]{empId});
+            return new Result.Success<>("Out time successfully entered");
+        }catch(Exception e){
+            return new Result.Error(new IOException("Data could not be updated"));
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.silentlad.employeemanagement.data;
+package com.silentlad.employeemanagement.data.contracts;
 
 public class ActualTimingContract {
 
