@@ -1,4 +1,4 @@
-package com.silentlad.employeemanagement.data.contracts;
+package com.silentlad.employeemanagement.data.access;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.silentlad.employeemanagement.data.Result;
+import com.silentlad.employeemanagement.data.contracts.EmployeeContract;
 import com.silentlad.employeemanagement.data.openHelpers.EmployeeOpenHelper;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class EmployeeAccess {
     public Cursor getData() {
         this.db = openHelper.getReadableDatabase();
 
-        String query = "SELECT * FROM employee";
+        String query = "SELECT * FROM " + EmployeeContract.EmployeeEntry.TABLE_NAME;
         return db.rawQuery(query, null);
     }
 

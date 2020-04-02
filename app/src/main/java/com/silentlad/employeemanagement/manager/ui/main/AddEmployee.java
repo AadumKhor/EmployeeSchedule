@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.silentlad.employeemanagement.R;
 import com.silentlad.employeemanagement.data.Result;
-import com.silentlad.employeemanagement.data.contracts.EmployeeAccess;
+import com.silentlad.employeemanagement.data.access.EmployeeAccess;
 
 public class AddEmployee extends Fragment {
 

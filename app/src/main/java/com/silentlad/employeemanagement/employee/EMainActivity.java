@@ -7,14 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.silentlad.employeemanagement.R;
 import com.silentlad.employeemanagement.data.ScheduleCard;
-import com.silentlad.employeemanagement.data.contracts.EmployeeAccess;
-import com.silentlad.employeemanagement.data.dbhelpers.EmployeeHelper;
+import com.silentlad.employeemanagement.data.access.EmployeeAccess;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
