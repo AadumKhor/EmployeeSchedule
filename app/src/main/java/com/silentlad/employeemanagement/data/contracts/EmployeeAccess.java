@@ -1,5 +1,6 @@
 package com.silentlad.employeemanagement.data.contracts;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.silentlad.employeemanagement.data.Result;
 import com.silentlad.employeemanagement.data.openHelpers.EmployeeOpenHelper;
+
+import java.io.IOException;
+import java.util.Random;
 
 public class EmployeeAccess {
     private SQLiteOpenHelper openHelper;
@@ -34,6 +38,32 @@ public class EmployeeAccess {
 
         String query = "SELECT * FROM employee";
         return db.rawQuery(query, null);
+    }
+
+    public Result insertNewEmployee(String firstName, String lastName){
+        this.db = openHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("id", random());
+        cv.put("firstName", firstName);
+        cv.put("lastName", lastName);
+        try{
+            db.insert("employee", null, cv);
+            return new Result.Success<>("Employee added");
+        }catch(Exception e){
+            return new Result.Error(new IOException(e.toString()));
+        }
+    }
+
+    private String random() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        int maxLength = 6;
+        char tempChar;
+        for (int i = 0; i < maxLength; i++) {
+            tempChar = (char) (random.nextInt(25) + 97);
+            sb.append(tempChar);
+        }
+        return sb.toString();
     }
 
 }

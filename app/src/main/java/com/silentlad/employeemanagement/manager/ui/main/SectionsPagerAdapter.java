@@ -19,7 +19,7 @@ import com.silentlad.employeemanagement.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.modify_tab, R.string.post_tab};
+    private static final int[] TAB_TITLES = new int[]{R.string.modify_tab, R.string.post_tab, R.string.add_employee};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -38,6 +38,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return new ModifySchedule();
             case(1):
                 return new PlaceholderFragment();
+            case(2):
+                return new AddEmployee();
         }
         return PlaceholderFragment.newInstance(position + 1);
     }
@@ -50,6 +52,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }

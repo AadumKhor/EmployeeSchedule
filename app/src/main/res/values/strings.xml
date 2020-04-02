@@ -21,4 +21,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_employee">Add Employee</string>
+    <string name="employee_last_name">Employee Last Name</string>
+    <string name="employee_first_name">Employee First Name</string>
 </resources>
