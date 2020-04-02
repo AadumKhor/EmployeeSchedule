@@ -12,3 +12,4 @@ public class EmployeeContract {
         public static final String COLUMN_L_NAME = "lastName";
     }
 }
+

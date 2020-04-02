@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -12,6 +13,8 @@ import android.widget.Toolbar;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.silentlad.employeemanagement.R;
 import com.silentlad.employeemanagement.data.ScheduleCard;
+import com.silentlad.employeemanagement.data.contracts.EmployeeAccess;
+import com.silentlad.employeemanagement.data.dbhelpers.EmployeeHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +32,9 @@ public class EMainActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private EmployeeAdapter adapter = new EmployeeAdapter(arrayList);
     private String date = "";
+    private String temp = "";
+
+    private EmployeeAccess dbAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,10 @@ public class EMainActivity extends AppCompatActivity {
 
         final CompactCalendarView calendarView = findViewById(R.id.calender);
         calendarView.setUseThreeLetterAbbreviation(true);
+
+        dbAccess = EmployeeAccess.getInstance(getApplicationContext());
+//        dbAccess.openDb();
+//        createList();
 
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
@@ -85,9 +95,19 @@ public class EMainActivity extends AppCompatActivity {
     }
 
     private void createList() {
-        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
-        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
-        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
-        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
+        Cursor cursor = dbAccess.getData();
+
+        if (cursor.getCount() != 0) {
+
+            while (cursor.moveToNext()) {
+                arrayList.add(new ScheduleCard(cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2)));
+            }
+        }
+//        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
+//        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
+//        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
+//        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
     }
 }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.silentlad.employeemanagement.R;
 import com.silentlad.employeemanagement.employee.EMainActivity;
+import com.silentlad.employeemanagement.manager.MMainActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,8 +31,8 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 if(type.equals("man")){
-//                    Intent intent = new Intent(getApplicationContext());
-//                    startActivity(intent);
+                    Intent intent = new Intent(getApplicationContext(), MMainActivity.class);
+                    startActivity(intent);
                 }
             }
         });
