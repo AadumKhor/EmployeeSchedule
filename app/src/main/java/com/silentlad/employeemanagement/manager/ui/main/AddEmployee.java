@@ -5,8 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +21,6 @@ import com.silentlad.employeemanagement.data.access.ScheduleAccess;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
@@ -68,7 +64,7 @@ public class AddEmployee extends Fragment {
 
         firstName = root.findViewById(R.id.add_emp_f_edit);
         lastName = root.findViewById(R.id.add_emp_l_edit);
-        position = root.findViewById(R.id.add_emp_pos_edit);
+        position = root.findViewById(R.id.post_posId__edit);
         startTime = root.findViewById(R.id.add_emp_start_time_edit);
         endTime = root.findViewById(R.id.add_emp_end_time_edit);
 
@@ -86,20 +82,6 @@ public class AddEmployee extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String fName = firstName.getText().toString();
-//                String lName = lastName.getText().toString();
-//
-//                if (fName.equals("") || lName.equals("")) {
-//                    Toast.makeText(getContext(), "Please enter valid data", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Result result = access.insertNewEmployee(fName, lName);
-//
-//                    if (result instanceof Result.Success) {
-//                        Toast.makeText(getContext(), "Employee Added.", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(getContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
                 try {
                     addDataToDb();
                 } catch (ParseException e) {
@@ -112,7 +94,7 @@ public class AddEmployee extends Fragment {
     }
 
 
-    String random(int maxLength) {
+    private String random(int maxLength) {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
         char tempChar;

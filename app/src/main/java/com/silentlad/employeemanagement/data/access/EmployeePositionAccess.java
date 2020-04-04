@@ -40,7 +40,34 @@ public class EmployeePositionAccess {
         this.db = openHelper.getReadableDatabase();
         String query = "SELECT * FROM " + EmployeePositionContract.EmployeePositionEntry.TABLE_NAME + " WHERE empId=?";
 
-        return db.rawQuery(query, new String[]{"abcdef"});
+        return db.rawQuery(query, new String[]{});
+    }
+
+    public String getEmpId(String posId) {
+        this.db = openHelper.getReadableDatabase();
+        String query = "SELECT empId FROM " + EmployeePositionContract.EmployeePositionEntry.TABLE_NAME + " WHERE posId=?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{posId});
+        String empId = "";
+        while (cursor.moveToNext()) {
+            empId = cursor.getString(cursor.getColumnIndex(EmployeePositionContract.EmployeePositionEntry.COLUMN_EMP_ID));
+        }
+        cursor.close();
+        return empId;
+    }
+
+    public String getPosition(String posId) {
+        this.db = openHelper.getReadableDatabase();
+        String query = "SELECT empPos FROM " + EmployeePositionContract.EmployeePositionEntry.TABLE_NAME + " WHERE posId=?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{posId});
+
+        String position = "";
+        while (cursor.moveToNext()) {
+            position = cursor.getString(cursor.getColumnIndex(EmployeePositionContract.EmployeePositionEntry.COLUMN_POSITION));
+        }
+        cursor.close();
+        return position;
     }
 
     public Result insertData(String posId, String empId, String position) {

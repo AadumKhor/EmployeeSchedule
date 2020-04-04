@@ -3,6 +3,7 @@ package com.silentlad.employeemanagement.data.access;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -33,9 +34,32 @@ public class DayAccess {
         this.db = openHelper.getReadableDatabase();
     }
 
-    public void closeDb(){
+    public void closeDb() {
         this.db.close();
     }
+
+    public String[] getDays(String empId) {
+        this.db = openHelper.getReadableDatabase();
+        String query = "SELECT * FROM " + DayTableEntry.TABLE_NAME + " WHERE empId=?";
+        Cursor cursor = db.rawQuery(query, new String[]{empId});
+
+        String[] result = new String[7];
+
+        while (cursor.moveToNext()) {
+            result[0] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SUN));
+            result[1] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_MON));
+            result[2] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_TUE));
+            result[3] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_WED));
+            result[4] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_THU));
+            result[5] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_FRI));
+            result[6] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SAT));
+        }
+
+        cursor.close();
+        return result;
+    }
+
+//    public Result updateDaysSchedule(String empId){}
 
     public Result insertDayData(String dId, String empId, boolean sunday, boolean monday, boolean tuesday, boolean wednesday,
                                 boolean thursday, boolean friday, boolean saturday) {
@@ -52,10 +76,10 @@ public class DayAccess {
         cv.put(DayTableEntry.COLUMN_FRI, friday);
         cv.put(DayTableEntry.COLUMN_SAT, saturday);
 
-        try{
+        try {
             db.insert(DayTableEntry.TABLE_NAME, null, cv);
             return new Result.Success<>("Days schedule added successfully");
-        }catch (Exception e){
+        } catch (Exception e) {
             return new Result.Error(new IOException(e.toString()));
         }
 

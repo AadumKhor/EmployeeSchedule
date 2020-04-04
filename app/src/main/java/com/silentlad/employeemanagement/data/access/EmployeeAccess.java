@@ -45,6 +45,20 @@ public class EmployeeAccess {
         return db.rawQuery(query, null);
     }
 
+    public String getName(String empId) {
+        this.db = openHelper.getReadableDatabase();
+        String query = "SELECT firstName,lastName FROM " + EmployeeContract.EmployeeEntry.TABLE_NAME + " WHERE id=?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{empId});
+        String fullName = "";
+        while (cursor.moveToNext()) {
+            fullName = cursor.getString(cursor.getColumnIndex(EmployeeContract.EmployeeEntry.COLUMN_F_NAME)) +
+                    " " + cursor.getString(cursor.getColumnIndex(EmployeeContract.EmployeeEntry.COLUMN_L_NAME));
+        }
+        cursor.close();
+        return fullName;
+    }
+
     public Result insertNewEmployee(String id, String firstName, String lastName) {
         this.db = openHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();

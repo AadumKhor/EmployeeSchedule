@@ -37,11 +37,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case (0):
                 return new ModifySchedule();
             case(1):
-                return new PlaceholderFragment();
+                return new PostScheduleFragment();
             case(2):
                 return new AddEmployee();
         }
-        return PlaceholderFragment.newInstance(position + 1);
+        return new ModifySchedule();
     }
 
     @Nullable

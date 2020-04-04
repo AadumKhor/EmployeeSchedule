@@ -43,14 +43,13 @@ public class EMainActivity extends AppCompatActivity {
         // Setting default toolbar title to empty
         date = dateFormat.format(Calendar.getInstance().getTime());
 
+        assert actionBar != null;
         actionBar.setTitle("Employee Schedule - " + date);
 
         final CompactCalendarView calendarView = findViewById(R.id.calender);
         calendarView.setUseThreeLetterAbbreviation(true);
 
         dbAccess = EmployeeAccess.getInstance(getApplicationContext());
-//        dbAccess.openDb();
-//        createList();
 
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
@@ -80,7 +79,6 @@ public class EMainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.schedule_of_this_day);
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-//        adapter = new EmployeeAdapter(arrayList);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
     }
@@ -103,9 +101,5 @@ public class EMainActivity extends AppCompatActivity {
                         cursor.getString(2)));
             }
         }
-//        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
-//        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
-//        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
-//        arrayList.add(new ScheduleCard("Monday", "10am", "5pm"));
     }
 }

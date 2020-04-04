@@ -9,14 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".manager.MNotificationsActivity"
-            android:label="Employee Notifications"
-            />
+        <activity android:name=".manager.ModifyScheduleActivity"></activity>
+        <activity
+            android:name=".manager.MNotificationsActivity"
+            android:label="Employee Notifications" />
         <activity
             android:name=".manager.MMainActivity"
             android:label="Manage Schedules"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".employee.EMainActivity" />
         <activity
             android:name=".login.LoginActivity"
