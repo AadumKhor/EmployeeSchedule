@@ -19,9 +19,12 @@
     <string name="modify_tab">Modify</string>
     <string name="post_tab">Post</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_employee">Add Employee</string>
-    <string name="employee_last_name">Employee Last Name</string>
-    <string name="employee_first_name">Employee First Name</string>
+    <string name="employee_last_name">Last Name</string>
+    <string name="employee_first_name">First Name</string>
+    <string name="employee_position">Position</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="eg_10_00_00">eg: 10:00:00</string>
 </resources>

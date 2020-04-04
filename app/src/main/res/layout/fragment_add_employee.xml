@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="ltr"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -16,10 +17,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <EditText
         android:id="@+id/add_emp_f_edit"
@@ -28,13 +29,14 @@
         android:layout_marginStart="28dp"
         android:ems="10"
         android:hint="@string/employee_first_name"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintHorizontal_bias="0.241"
         app:layout_constraintStart_toEndOf="@+id/add_emp_first"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <TextView
         android:id="@+id/add_emp_last"
@@ -46,10 +48,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_emp_first"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <EditText
         android:id="@+id/add_emp_l_edit"
@@ -57,57 +59,132 @@
         android:layout_height="50dp"
         android:ems="10"
         android:hint="@string/employee_last_name"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toEndOf="@+id/add_emp_last"
         app:layout_constraintTop_toBottomOf="@+id/add_emp_f_edit"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.099" />
 
+    <!--    start time-->
     <TextView
         android:id="@+id/add_emp_pos"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:gravity="center_vertical"
-        android:text="@string/employee_last_name"
+        android:text="@string/employee_position"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.065"
+        app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_emp_last"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <EditText
         android:id="@+id/add_emp_pos_edit"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:ems="10"
-        android:hint="@string/employee_last_name"
+        android:hint="@string/employee_position"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.576"
         app:layout_constraintStart_toEndOf="@+id/add_emp_pos"
         app:layout_constraintTop_toBottomOf="@+id/add_emp_l_edit"
-        app:layout_constraintVertical_bias="0.121" />
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/add_emp_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:text="@string/start_time"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_emp_pos"
+        app:layout_constraintVertical_bias="0.096" />
+
+    <EditText
+        android:id="@+id/add_emp_start_time_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="@string/eg_10_00_00"
+        android:importantForAutofill="no"
+        android:inputType="time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/add_emp_start_time"
+        app:layout_constraintTop_toBottomOf="@+id/add_emp_pos_edit"
+        app:layout_constraintVertical_bias="0.099" />
+
+<!--    end time-->
+
+    <TextView
+        android:id="@+id/add_emp_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:text="@string/end_time"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_emp_start_time"
+        app:layout_constraintVertical_bias="0.101" />
+
+    <EditText
+        android:id="@+id/add_emp_end_time_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="@string/eg_10_00_00"
+        android:importantForAutofill="no"
+        android:inputType="time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.546"
+        app:layout_constraintStart_toEndOf="@+id/add_emp_end_time"
+        app:layout_constraintTop_toBottomOf="@+id/add_emp_start_time_edit"
+        app:layout_constraintVertical_bias="0.098" />
+
+    <ca.antonious.materialdaypicker.MaterialDayPicker
+        android:id="@+id/materialDayPicker"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_emp_end_time_edit"
+        app:layout_constraintVertical_bias="0.2" />
 
     <Button
         android:id="@+id/add_employee_button"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/add_employee"
         android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/add_employee"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_emp_l_edit"
-        app:layout_constraintVertical_bias="0.308" />
+        app:layout_constraintTop_toBottomOf="@+id/materialDayPicker"
+        app:layout_constraintVertical_bias="0.3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.silentlad.employeemanagement.R;
 import com.silentlad.employeemanagement.data.ScheduleCard;
 import com.silentlad.employeemanagement.data.access.EmployeeAccess;
+import com.silentlad.employeemanagement.data.access.EmployeePositionAccess;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

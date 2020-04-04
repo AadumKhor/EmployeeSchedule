@@ -30,8 +30,12 @@ public class EmployeeAccess {
         return instance;
     }
 
-    public void openDb(){
+    public void openDb() {
         this.db = openHelper.getWritableDatabase();
+    }
+
+    public void closeDb() {
+        this.db.close();
     }
 
     public Cursor getData() {
@@ -41,30 +45,18 @@ public class EmployeeAccess {
         return db.rawQuery(query, null);
     }
 
-    public Result insertNewEmployee(String firstName, String lastName){
+    public Result insertNewEmployee(String id, String firstName, String lastName) {
         this.db = openHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("id", random());
+        cv.put("id", id);
         cv.put("firstName", firstName);
         cv.put("lastName", lastName);
-        try{
+        try {
             db.insert("employee", null, cv);
             return new Result.Success<>("Employee added");
-        }catch(Exception e){
+        } catch (Exception e) {
             return new Result.Error(new IOException(e.toString()));
         }
-    }
-
-    private String random() {
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder();
-        int maxLength = 6;
-        char tempChar;
-        for (int i = 0; i < maxLength; i++) {
-            tempChar = (char) (random.nextInt(25) + 97);
-            sb.append(tempChar);
-        }
-        return sb.toString();
     }
 
 }
