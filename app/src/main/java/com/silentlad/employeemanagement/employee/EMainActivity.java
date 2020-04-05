@@ -164,8 +164,8 @@ public class EMainActivity extends AppCompatActivity {
     }
 
     private void getFullNameAndPosId() {
-        fullName = employeeAccess.getName(empId);
-        Cursor posCursor = employeePositionAccess.getEmpDetails(empId);
+        fullName = employeeAccess.getName(empId.trim());
+        Cursor posCursor = employeePositionAccess.getEmpDetails(empId.trim());
 
         if(posCursor.getCount() != 0){
             while(posCursor.moveToNext()){

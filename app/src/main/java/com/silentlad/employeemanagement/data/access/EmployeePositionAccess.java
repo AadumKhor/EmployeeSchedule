@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.silentlad.employeemanagement.data.Result;
 import com.silentlad.employeemanagement.data.contracts.EmployeePositionContract;
@@ -53,12 +54,16 @@ public class EmployeePositionAccess {
     public String getEmpId(String posId) {
         this.db = openHelper.getReadableDatabase();
         String query = "SELECT empId FROM " + EmployeePositionContract.EmployeePositionEntry.TABLE_NAME + " WHERE posId=?";
-
+        Log.println(Log.DEBUG, "position id", query);
         Cursor cursor = db.rawQuery(query, new String[]{posId});
+        Log.println(Log.DEBUG, "position id", "2");
         String empId = "";
         while (cursor.moveToNext()) {
+            Log.println(Log.DEBUG, "position id", "while....");
             empId = cursor.getString(cursor.getColumnIndex(EmployeePositionContract.EmployeePositionEntry.COLUMN_EMP_ID));
+            Log.println(Log.DEBUG, "position id", empId);
         }
+//        Log.println(Log.DEBUG, "position id", empId);
         cursor.close();
         return empId;
     }

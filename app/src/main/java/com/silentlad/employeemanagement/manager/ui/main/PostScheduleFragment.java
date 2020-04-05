@@ -93,13 +93,15 @@ public class PostScheduleFragment extends Fragment {
                     Log.println(Log.DEBUG, "position id", "Inside if");
                     if (posId.getText() != null) {
                         Log.println(Log.DEBUG, "position id", "Not null");
-                        String empIdValue = employeePositionAccess.getEmpId(posId.getText().toString());
-                        String positionValue = employeePositionAccess.getPosition(posId.getText().toString());
-
-                        String fullName = employeeAccess.getName(empIdValue);
+                        String empIdValue = employeePositionAccess.getEmpId(posId.getText().toString().trim());
+                        Log.println(Log.DEBUG, "position id", empIdValue);
+                        String positionValue = employeePositionAccess.getPosition(posId.getText().toString().trim());
+                        Log.println(Log.DEBUG, "position id", positionValue);
+                        Log.println(Log.DEBUG, "position id", empIdValue+positionValue);
+                        String fullName = employeeAccess.getName(empIdValue.trim());
 
                         empId.setText(empIdValue);
-                        position.setText(positionValue);
+                        position.setText(positionValue.trim());
                         name.setText(fullName);
                     } else {
                         Toast.makeText(getContext(), "Please enter posId!", Toast.LENGTH_SHORT).show();

@@ -38,7 +38,28 @@ public class DayAccess {
         this.db.close();
     }
 
-    public String[] getDays(String empId, String sId) {
+    public String[] getDays(String empId) {
+        this.db = openHelper.getReadableDatabase();
+        String query = "SELECT * FROM " + DayTableEntry.TABLE_NAME + " WHERE empId=?";
+        Cursor cursor = db.rawQuery(query, new String[]{empId});
+
+        String[] result = new String[7];
+
+        while (cursor.moveToNext()) {
+            result[0] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SUN));
+            result[1] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_MON));
+            result[2] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_TUE));
+            result[3] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_WED));
+            result[4] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_THU));
+            result[5] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_FRI));
+            result[6] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SAT));
+        }
+
+        cursor.close();
+        return result;
+    }
+
+    public String[] getDaysForSchedule(String empId, String sId){
         this.db = openHelper.getReadableDatabase();
         String query = "SELECT * FROM " + DayTableEntry.TABLE_NAME + " WHERE empId=? AND sId=?";
         Cursor cursor = db.rawQuery(query, new String[]{empId, sId});
