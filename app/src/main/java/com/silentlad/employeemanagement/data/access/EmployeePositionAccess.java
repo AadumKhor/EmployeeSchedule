@@ -43,6 +43,13 @@ public class EmployeePositionAccess {
         return db.rawQuery(query, new String[]{});
     }
 
+    public Cursor getEmpDetails(String empId){
+        this.db = openHelper.getReadableDatabase();
+        String query = "SELECT posId,empPos FROM " + EmployeePositionContract.EmployeePositionEntry.TABLE_NAME + " WHERE empId=?";
+
+        return db.rawQuery(query, new String[]{empId});
+    }
+
     public String getEmpId(String posId) {
         this.db = openHelper.getReadableDatabase();
         String query = "SELECT empId FROM " + EmployeePositionContract.EmployeePositionEntry.TABLE_NAME + " WHERE posId=?";
