@@ -7,24 +7,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.silentlad.employeemanagement.R;
 import com.silentlad.employeemanagement.data.ScheduleCard;
+import com.silentlad.employeemanagement.data.access.DayAccess;
 import com.silentlad.employeemanagement.data.access.EmployeeAccess;
 import com.silentlad.employeemanagement.data.access.EmployeePositionAccess;
+import com.silentlad.employeemanagement.data.access.ScheduleAccess;
 import com.silentlad.employeemanagement.data.contracts.EmployeePositionContract;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 public class EMainActivity extends AppCompatActivity {
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+    private SimpleDateFormat appBarFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
     private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
 
     private RecyclerView recyclerView;
@@ -36,9 +43,13 @@ public class EMainActivity extends AppCompatActivity {
     private String posId = "";
     private String position = "";
     private String empId = "";
+    private HashMap<String, Boolean> daysMaps = new HashMap<>();
 
     private EmployeeAccess employeeAccess;
     private EmployeePositionAccess employeePositionAccess;
+    private DayAccess dayAccess;
+    private ScheduleAccess scheduleAccess;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +61,7 @@ public class EMainActivity extends AppCompatActivity {
 
         // ACTION BAR ACTIVATION AND TEXT
         final ActionBar actionBar = getSupportActionBar();
-        date = dateFormat.format(Calendar.getInstance().getTime());
+        date = appBarFormat.format(Calendar.getInstance().getTime());
         assert actionBar != null;
         actionBar.setTitle("Employee Schedule - " + date);
 
@@ -61,7 +72,10 @@ public class EMainActivity extends AppCompatActivity {
         // DB INIT
         employeeAccess = EmployeeAccess.getInstance(getApplicationContext());
         employeePositionAccess = EmployeePositionAccess.getInstance(getApplicationContext());
+        dayAccess = DayAccess.getInstance(getApplicationContext());
+        scheduleAccess = ScheduleAccess.getInstance(getApplicationContext());
         getFullNameAndPosId();
+        fillDaysMaps();
 
         // SET GREETING TEXT
         TextView greetings = findViewById(R.id.greeting_text);
@@ -71,26 +85,82 @@ public class EMainActivity extends AppCompatActivity {
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-                date = dateFormat.format(dateClicked);
+                date = appBarFormat.format(dateClicked);
                 actionBar.setTitle("Employee Schedule - " + date);
-                arrayList.clear();
-                createList();
-                adapter.notifyDataSetChanged();
+                String day ="";
+
+                try {
+                    day  = Objects.requireNonNull(appBarFormat.parse(date)).toString().split(" ")[0];
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+                Log.println(Log.DEBUG, "day", day);
+
+                if(Boolean.valueOf(daysMaps.get(day))){
+                    Log.println(Log.DEBUG, "day", "Inside if");
+                    arrayList.clear();
+                    createList(day);
+                    adapter.notifyDataSetChanged();
+                }else{
+                    Log.println(Log.DEBUG, "day", "Inside else");
+                    arrayList.clear();
+                    adapter.notifyDataSetChanged();
+                }
+
             }
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-                date = dateFormat.format(firstDayOfNewMonth);
+                date = appBarFormat.format(firstDayOfNewMonth);
                 actionBar.setTitle("Employee Schedule - " + date);
-                arrayList.clear();
-                createSecondList();
-                adapter.notifyDataSetChanged();
+
+                String day ="";
+
+                try {
+                    day  = Objects.requireNonNull(appBarFormat.parse(date)).toString().split(" ")[0];
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+                Log.println(Log.DEBUG, "day", day);
+
+                if(Boolean.valueOf(daysMaps.get(day))){
+                    Log.println(Log.DEBUG, "day", "Inside if");
+                    arrayList.clear();
+                    createList(day);
+                    adapter.notifyDataSetChanged();
+                }else{
+                    Log.println(Log.DEBUG, "day", "Inside else");
+                    arrayList.clear();
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
         // CREATE SCHEDULE LIST AND RECYCLER VIEW
-        createList();
+//        createList();
         buildRecyclerView();
 
+    }
+
+    private void fillDaysMaps(){
+        String[] days = dayAccess.getDays(empId);
+
+        String sunday = days[0];
+        String monday = days[1];
+        String tuesday = days[2];
+        String wednesday = days[3];
+        String thursday = days[4];
+        String friday = days[5];
+        String saturday = days[6];
+
+        daysMaps.put("Sun", Boolean.valueOf(sunday));
+        daysMaps.put("Mon", Boolean.valueOf(monday));
+        daysMaps.put("Tue", Boolean.valueOf(tuesday));
+        daysMaps.put("Wed", Boolean.valueOf(wednesday));
+        daysMaps.put("Thu", Boolean.valueOf(thursday));
+        daysMaps.put("Fri", Boolean.valueOf(friday));
+        daysMaps.put("Sat", Boolean.valueOf(saturday));
+
+        Log.println(Log.DEBUG, "day", String.valueOf(daysMaps.get("Wed")));
     }
 
     private void getFullNameAndPosId() {
@@ -120,15 +190,14 @@ public class EMainActivity extends AppCompatActivity {
         arrayList.add(new ScheduleCard("Tuesday", "10am", "5pm"));
     }
 
-    private void createList() {
-        Cursor cursor = employeeAccess.getData();
+    private void createList(String dayValue) {
+        Cursor cursor = scheduleAccess.getDataForPosition(posId);
 
         if (cursor.getCount() != 0) {
-
             while (cursor.moveToNext()) {
-                arrayList.add(new ScheduleCard(cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2)));
+                arrayList.add(new ScheduleCard(dayValue,
+                        cursor.getString(2),
+                        cursor.getString(3)));
             }
         }
     }

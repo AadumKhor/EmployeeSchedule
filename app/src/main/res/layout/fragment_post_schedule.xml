@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <EditText
         android:id="@+id/post_posId__edit"
@@ -35,7 +35,37 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/post_posId"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/post_emp_name"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:text="@string/employee_name"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_posId"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/post_emp_name_value"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="@string/enter_position_id"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/post_emp_id"
+        app:layout_constraintTop_toBottomOf="@+id/post_posId__edit"
+        app:layout_constraintVertical_bias="0.055" />
 
     <TextView
         android:id="@+id/post_emp_id"
@@ -49,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_posId"
+        app:layout_constraintTop_toBottomOf="@+id/post_emp_name"
         app:layout_constraintVertical_bias="0.05" />
 
     <TextView
@@ -64,7 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/post_emp_id"
-        app:layout_constraintTop_toBottomOf="@+id/post_posId__edit"
+        app:layout_constraintTop_toBottomOf="@+id/post_emp_name_value"
         app:layout_constraintVertical_bias="0.055" />
 
     <TextView
@@ -160,7 +190,7 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <ca.antonious.materialdaypicker.MaterialDayPicker
-        android:id="@+id/materialDayPicker"
+        android:id="@+id/post_materialDayPicker"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -171,7 +201,7 @@
         app:layout_constraintVertical_bias="0.1" />
 
     <Button
-        android:id="@+id/add_employee_button"
+        android:id="@+id/post_button"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:background="@color/colorPrimary"
@@ -183,6 +213,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialDayPicker"
+        app:layout_constraintTop_toBottomOf="@+id/post_materialDayPicker"
         app:layout_constraintVertical_bias="0.3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

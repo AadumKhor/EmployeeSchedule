@@ -38,10 +38,10 @@ public class DayAccess {
         this.db.close();
     }
 
-    public String[] getDays(String empId) {
+    public String[] getDays(String empId, String sId) {
         this.db = openHelper.getReadableDatabase();
-        String query = "SELECT * FROM " + DayTableEntry.TABLE_NAME + " WHERE empId=?";
-        Cursor cursor = db.rawQuery(query, new String[]{empId});
+        String query = "SELECT * FROM " + DayTableEntry.TABLE_NAME + " WHERE empId=? AND sId=?";
+        Cursor cursor = db.rawQuery(query, new String[]{empId, sId});
 
         String[] result = new String[7];
 
@@ -61,13 +61,14 @@ public class DayAccess {
 
 //    public Result updateDaysSchedule(String empId){}
 
-    public Result insertDayData(String dId, String empId, boolean sunday, boolean monday, boolean tuesday, boolean wednesday,
+    public Result insertDayData(String dId, String empId, String sId,boolean sunday, boolean monday, boolean tuesday, boolean wednesday,
                                 boolean thursday, boolean friday, boolean saturday) {
         this.db = openHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(DayTableEntry.COLUMN_ID, dId);
         cv.put(DayTableEntry.COLUMN_EMP_ID, empId);
+        cv.put(DayTableEntry.COLUMN_S_ID, sId);
         cv.put(DayTableEntry.COLUMN_SUN, sunday);
         cv.put(DayTableEntry.COLUMN_MON, monday);
         cv.put(DayTableEntry.COLUMN_TUE, tuesday);

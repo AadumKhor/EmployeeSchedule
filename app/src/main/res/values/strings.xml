@@ -38,4 +38,5 @@
     <string name="employee_id">Employee ID</string>
     <string name="enter_position_id">Enter Position ID</string>
     <string name="post_schedule">Post Schedule</string>
+    <string name="employee_name">Employee Name</string>
 </resources>

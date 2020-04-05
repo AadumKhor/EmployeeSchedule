@@ -32,16 +32,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-
         switch (position) {
-            case (0):
-                return new ModifySchedule();
-            case(1):
+            case (1):
                 return new PostScheduleFragment();
-            case(2):
+            case (2):
                 return new AddEmployee();
+            default:
+                return new ModifySchedule();
         }
-        return new ModifySchedule();
     }
 
     @Nullable
