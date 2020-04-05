@@ -59,37 +59,15 @@ public class DayAccess {
         return result;
     }
 
-    public String[] getDaysForSchedule(String empId, String sId){
-        this.db = openHelper.getReadableDatabase();
-        String query = "SELECT * FROM " + DayTableEntry.TABLE_NAME + " WHERE empId=? AND sId=?";
-        Cursor cursor = db.rawQuery(query, new String[]{empId, sId});
-
-        String[] result = new String[7];
-
-        while (cursor.moveToNext()) {
-            result[0] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SUN));
-            result[1] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_MON));
-            result[2] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_TUE));
-            result[3] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_WED));
-            result[4] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_THU));
-            result[5] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_FRI));
-            result[6] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SAT));
-        }
-
-        cursor.close();
-        return result;
-    }
-
 //    public Result updateDaysSchedule(String empId){}
 
-    public Result insertDayData(String dId, String empId, String sId,boolean sunday, boolean monday, boolean tuesday, boolean wednesday,
+    public Result insertDayData(String dId, String empId, boolean sunday, boolean monday, boolean tuesday, boolean wednesday,
                                 boolean thursday, boolean friday, boolean saturday) {
         this.db = openHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(DayTableEntry.COLUMN_ID, dId);
         cv.put(DayTableEntry.COLUMN_EMP_ID, empId);
-        cv.put(DayTableEntry.COLUMN_S_ID, sId);
         cv.put(DayTableEntry.COLUMN_SUN, sunday);
         cv.put(DayTableEntry.COLUMN_MON, monday);
         cv.put(DayTableEntry.COLUMN_TUE, tuesday);

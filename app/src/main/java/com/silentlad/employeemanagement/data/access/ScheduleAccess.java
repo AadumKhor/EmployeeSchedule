@@ -37,13 +37,6 @@ public class ScheduleAccess {
         this.database.close();
     }
 
-    public Cursor getDataForPosition(String posId){
-        this.database = openHelper.getReadableDatabase();
-        String query = "SELECT * FROM " + ScheduleEntry.TABLE_NAME + " WHERE posId=?";
-
-        return database.rawQuery(query, new String[]{posId});
-    }
-
     public Cursor getData() {
         this.database = openHelper.getReadableDatabase();
         String query = "SELECT * FROM " + ScheduleEntry.TABLE_NAME;

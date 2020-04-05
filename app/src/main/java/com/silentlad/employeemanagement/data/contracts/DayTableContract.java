@@ -2,14 +2,12 @@ package com.silentlad.employeemanagement.data.contracts;
 
 public class DayTableContract {
 
-    public DayTableContract() {
-    }
+    public DayTableContract(){}
 
-    public static class DayTableEntry {
+    public static class DayTableEntry{
         public static final String TABLE_NAME = "days";
         public static final String COLUMN_ID = "dId";
         public static final String COLUMN_EMP_ID = "empId";
-        public static final String COLUMN_S_ID = "sId";
         public static final String COLUMN_SUN = "sunday";
         public static final String COLUMN_MON = "monday";
         public static final String COLUMN_TUE = "tuesday";

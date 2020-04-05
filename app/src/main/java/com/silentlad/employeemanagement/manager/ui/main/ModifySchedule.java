@@ -41,24 +41,19 @@ public class ModifySchedule extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_modify_schedule, container, false);
-
-        // RECYCLER VIEW AND ADAPTER
         recyclerView = root.findViewById(R.id.modify_recycler);
         adapter = new ManagerAdapter(scheduleList, getContext());
 
-        // DB INIT
         scheduleAccess = ScheduleAccess.getInstance(getContext());
         employeePositionAccess = EmployeePositionAccess.getInstance(getContext());
         employeeAccess = EmployeeAccess.getInstance(getContext());
         dayAccess = DayAccess.getInstance(getContext());
 
-        // RECYCLER VIEW INIT
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        // CREATE LIST
         createList();
         return root;
     }
@@ -80,8 +75,7 @@ public class ModifySchedule extends Fragment {
                 String fullName = employeeAccess.getName(empId.trim());
 
                 // use empId to get working days
-                //TODO:change this method
-                String[] daysOfWeekArray = dayAccess.getDaysForSchedule(empId.trim(), sId);
+                String[] daysOfWeekArray = dayAccess.getDays(empId);
                 String daysOfWeekString = "";
 
                 for (String s : daysOfWeekArray) {
