@@ -62,11 +62,11 @@ public class AddEmployee extends Fragment {
         daysMap.put("friday",false);
         daysMap.put("saturday",false);
 
-        firstName = root.findViewById(R.id.add_emp_f_edit);
-        lastName = root.findViewById(R.id.add_emp_l_edit);
+        firstName = root.findViewById(R.id.edit_full_name_value);
+        lastName = root.findViewById(R.id.edit_position_value);
         position = root.findViewById(R.id.post_posId__edit);
-        startTime = root.findViewById(R.id.add_emp_start_time_edit);
-        endTime = root.findViewById(R.id.add_emp_end_time_edit);
+        startTime = root.findViewById(R.id.edit_start_time);
+        endTime = root.findViewById(R.id.edit_end_time);
 
         Button button = root.findViewById(R.id.add_employee_button);
         MaterialDayPicker dayPicker = root.findViewById(R.id.materialDayPicker);
@@ -118,13 +118,14 @@ public class AddEmployee extends Fragment {
         if (isDataValid) {
             String empId = random(6);
             String posId = random(8);
+            String sId = random(15);
             Result result1 = employeeAccess.insertNewEmployee(empId, fName, lName);
             Result result2 = employeePositionAccess.insertData(posId, empId, pos);
-            Result result3 = dayAccess.insertDayData(random(15), empId,
+            Result result3 = dayAccess.insertDayData(random(15), empId,sId,
                     daysMap.get("sunday"), daysMap.get("monday"), daysMap.get("tuesday"),
                     daysMap.get("wednesday"), daysMap.get("thursday")
                     , daysMap.get("friday"), daysMap.get("saturday"));
-            Result result4 = scheduleAccess.insertSchedule(random(15), posId, sTime, eTime);
+            Result result4 = scheduleAccess.insertSchedule(sId, posId, sTime, eTime);
 
             if (result1 instanceof Result.Success && result2 instanceof Result.Success
                     && result3 instanceof Result.Success && result4 instanceof Result.Success) {

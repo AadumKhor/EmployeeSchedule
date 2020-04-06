@@ -29,7 +29,6 @@
     <string name="eg_10_00_00">eg: 10:00:00</string>
     <string name="position_value">Position Value</string>
     <string name="position">Position:</string>
-    <string name="edit_schedule">Edit Schedule</string>
     <string name="days_of_the_week">Days of the week:</string>
     <string name="name">Name:</string>
     <string name="name_value">Name Value</string>
@@ -39,4 +38,8 @@
     <string name="enter_position_id">Enter Position ID</string>
     <string name="post_schedule">Post Schedule</string>
     <string name="employee_name">Employee Name</string>
+    <string name="edit_schedule">Edit Schedule</string>
+    <string name="delete_schedule">Delete Schedule</string>
+    <string name="clock_out">Clock Out</string>
+    <string name="clocked_out">Already Clocked Out!</string>
 </resources>

@@ -41,13 +41,6 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ManagerV
             position = itemView.findViewById(R.id.schedule_emp_pos_value);
             name = itemView.findViewById(R.id.schedule_emp_name_value);
             editButton = itemView.findViewById(R.id.edit_button);
-
-//            editButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
         }
     }
 
@@ -72,6 +65,8 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ManagerV
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), ModifyScheduleActivity.class);
+                intent.putExtra("name", currentCard.getName());
+                intent.putExtra("position", currentCard.getPosition());
                 intent.putExtra("startTime", currentCard.getStartTime());
                 intent.putExtra("endTime", currentCard.getEndTime());
                 intent.putExtra("daysOfWeek", currentCard.getDaysOfTheWeek());

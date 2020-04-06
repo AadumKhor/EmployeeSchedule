@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String idEntered = "";
                 try {
-                    idEntered = enterId.getText().toString();
+                    idEntered = enterId.getText().toString().trim();
                 } catch (NullPointerException e) {
                     idEntered = "";
                     e.printStackTrace();
@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), EMainActivity.class);
                         intent.putExtra("empId", idEntered);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(), "Invalid login!", Toast.LENGTH_LONG).show();
                     }
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MMainActivity.class);
                         intent.putExtra("empId", idEntered);
                         startActivity(intent);
-
+                        finish();
                     }
                 }
             }

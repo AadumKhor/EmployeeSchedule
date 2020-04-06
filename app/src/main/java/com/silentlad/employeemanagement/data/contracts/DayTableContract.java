@@ -8,6 +8,7 @@ public class DayTableContract {
         public static final String TABLE_NAME = "days";
         public static final String COLUMN_ID = "dId";
         public static final String COLUMN_EMP_ID = "empId";
+        public static final String COLUMN_SID = "sId";
         public static final String COLUMN_SUN = "sunday";
         public static final String COLUMN_MON = "monday";
         public static final String COLUMN_TUE = "tuesday";

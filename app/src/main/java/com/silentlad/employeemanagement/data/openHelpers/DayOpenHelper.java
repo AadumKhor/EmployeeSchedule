@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DayOpenHelper extends SQLiteAssetHelper {
-    private static final String DB_NAME = "days.db";
+    private static final String DB_NAME = "day_table.db";
     private static final int DB_VERSION = 1;
 
     public DayOpenHelper(Context context) {

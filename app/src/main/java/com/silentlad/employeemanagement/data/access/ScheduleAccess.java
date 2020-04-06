@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.silentlad.employeemanagement.data.Result;
+import com.silentlad.employeemanagement.data.contracts.DayTableContract;
 import com.silentlad.employeemanagement.data.openHelpers.ScheduleOpenHelper;
 import com.silentlad.employeemanagement.data.contracts.ScheduleContract.*;
 
@@ -40,11 +41,26 @@ public class ScheduleAccess {
     public Cursor getData() {
         this.database = openHelper.getReadableDatabase();
         String query = "SELECT * FROM " + ScheduleEntry.TABLE_NAME;
-        Cursor cursor = database.rawQuery(query, null);
-        return cursor;
+        return database.rawQuery(query, null);
     }
 
-    public Result insertSchedule(String sId,String posId, String startTime, String endTime) {
+    public String[] getScheduleWithScheduleId(String sId) {
+        this.database = openHelper.getReadableDatabase();
+        String query = "SELECT startTime,endTime FROM " + ScheduleEntry.TABLE_NAME + " WHERE sId=?";
+
+        Cursor cursor = database.rawQuery(query, new String[]{sId});
+        String[] result = new String[2];
+        if (cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                result[0] = cursor.getString(cursor.getColumnIndex(ScheduleEntry.COLUMN_START_TIME));
+                result[1] = cursor.getString(cursor.getColumnIndex(ScheduleEntry.COLUMN_END_TIME));
+            }
+        }
+        cursor.close();
+        return result;
+    }
+
+    public Result insertSchedule(String sId, String posId, String startTime, String endTime) {
         this.database = openHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -60,5 +76,51 @@ public class ScheduleAccess {
             return new Result.Error(new IOException(e.toString()));
         }
 
+    }
+
+    public Result updateSchedule(String sId, String startTime, String endTime) {
+        this.database = openHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(ScheduleEntry.COLUMN_START_TIME, startTime);
+        cv.put(ScheduleEntry.COLUMN_END_TIME, endTime);
+
+        try {
+            int i = database.update("schedule", cv, "sId=?", new String[]{sId});
+            return new Result.Success<>(i);
+        } catch (Exception e) {
+            return new Result.Error(new IOException(e.toString()));
+        }
+    }
+
+    public Result deleteEntry(String sId) {
+        this.database = openHelper.getWritableDatabase();
+        try {
+            int i = database.delete("schedule", "sId=?", new String[]{sId});
+            return new Result.Success<>(String.valueOf(i));
+        } catch (Exception e) {
+            return new Result.Error(new IOException(e.toString()));
+        }
+    }
+
+    public String getPosId(String sId) {
+        this.database = openHelper.getReadableDatabase();
+        String query = "SELECT posId FROM schedule where sId=?";
+        Cursor cursor = database.rawQuery(query, new String[]{sId});
+        String posId = "";
+        if (cursor.moveToFirst()) {
+            while (cursor.moveToNext()) {
+                posId = cursor.getString(cursor.getColumnIndex(ScheduleEntry.COLUMN_POSITION_ID));
+            }
+        }
+        cursor.close();
+        return posId;
+    }
+
+    public Cursor getDataForPosition(String posId) {
+        this.database = openHelper.getReadableDatabase();
+        String query = "SELECT * FROM " + ScheduleEntry.TABLE_NAME + " WHERE posId=?";
+
+        return database.rawQuery(query, new String[]{posId});
     }
 }

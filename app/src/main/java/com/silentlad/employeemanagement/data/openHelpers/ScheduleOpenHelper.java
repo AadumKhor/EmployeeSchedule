@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class ScheduleOpenHelper extends SQLiteAssetHelper {
-    private static final String DB_NAME = "schedule.db";
+    private static final String DB_NAME = "schedule_table.db";
     private static final int DB_VERSION = 1;
 
     public ScheduleOpenHelper(Context context) {

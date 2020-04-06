@@ -22,10 +22,7 @@ import com.silentlad.employeemanagement.data.access.EmployeeAccess;
 import com.silentlad.employeemanagement.data.access.EmployeePositionAccess;
 import com.silentlad.employeemanagement.data.access.ScheduleAccess;
 
-import java.util.HashMap;
 import java.util.Random;
-
-import ca.antonious.materialdaypicker.MaterialDayPicker;
 
 public class PostScheduleFragment extends Fragment {
     private EditText posId;
@@ -53,8 +50,8 @@ public class PostScheduleFragment extends Fragment {
         posId = root.findViewById(R.id.post_posId_edit);
         empId = root.findViewById(R.id.post_emp_id_value);
         position = root.findViewById(R.id.post_position_value);
-        startTime = root.findViewById(R.id.add_emp_start_time_edit);
-        endTime = root.findViewById(R.id.add_emp_end_time_edit);
+        startTime = root.findViewById(R.id.edit_start_time);
+        endTime = root.findViewById(R.id.edit_end_time);
         name = root.findViewById(R.id.post_emp_name_value);
         Button postScheduleButton = root.findViewById(R.id.post_schedule_button);
 

@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class ScheduleHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
-    private static final String DB_NAME = "schedule.db";
+    private static final String DB_NAME = "schedule_table.db";
 
     public ScheduleHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);

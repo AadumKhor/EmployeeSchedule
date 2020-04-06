@@ -8,4 +8,5 @@
 <!--    timing clock in and out colors-->
     <color name="clockIn">#03fc20</color>
     <color name="clockOut">#ff0015</color>
+    <color name="clockedOut">#6b6b6b</color>
 </resources>

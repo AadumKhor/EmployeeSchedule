@@ -11,15 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.silentlad.employeemanagement.R;
+import com.silentlad.employeemanagement.data.Result;
 import com.silentlad.employeemanagement.data.ScheduleCard;
+import com.silentlad.employeemanagement.data.dbhelpers.ActualTimingHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
     private ArrayList<ScheduleCard> mArrayList;
+    private ActualTimingHelper mTimingHelper;
+    private String mEmpId;
 
-    public EmployeeAdapter(ArrayList<ScheduleCard> arrayList){
+    public EmployeeAdapter(String EmpId, ArrayList<ScheduleCard> arrayList, ActualTimingHelper mTimingHelper) {
         this.mArrayList = arrayList;
+        this.mTimingHelper = mTimingHelper;
+        this.mEmpId = EmpId;
     }
 
     public static class EmployeeViewHolder extends RecyclerView.ViewHolder {
@@ -36,13 +44,6 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             endTime = itemView.findViewById(R.id.schedule_end_value);
             clockButton = itemView.findViewById(R.id.schedule_clock);
             timeOffButton = itemView.findViewById(R.id.schedule_time_off);
-
-            clockButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clockButton.setBackgroundResource(R.color.clockOut);
-                }
-            });
         }
     }
 
@@ -54,11 +55,41 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EmployeeViewHolder holder, int position) {
-        holder.timeOffButton.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull final EmployeeViewHolder holder, int position) {
+//        holder.timeOffButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(v.getContext(), "Mail sent to manager.", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+        holder.clockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Mail sent to manager.", Toast.LENGTH_SHORT).show();
+                if (holder.clockButton.getText().equals(String.valueOf(R.string.clock_in))) {
+
+                    Result result = mTimingHelper.insertData(mEmpId,
+                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())));
+
+                    if (result instanceof Result.Success) {
+                        Toast.makeText(v.getContext(), "Clocked IN!", Toast.LENGTH_LONG).show();
+                        holder.clockButton.setBackgroundResource(R.color.clockOut);
+                        holder.clockButton.setText(R.string.clock_out);
+                    }else{
+                        Toast.makeText(v.getContext(), "Some error occurred.", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    Result result = mTimingHelper.updateData(mEmpId,
+                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())));
+
+                    if (result instanceof Result.Success) {
+                        Toast.makeText(holder.itemView.getContext(), "Clocked OUT!", Toast.LENGTH_LONG).show();
+                        holder.clockButton.setBackgroundResource(R.color.clockedOut);
+                        holder.clockButton.setText(R.string.clocked_out);
+                    }else{
+                        Toast.makeText(holder.itemView.getContext(), "Some error occurred.", Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         });
         ScheduleCard currentItem = mArrayList.get(position);
