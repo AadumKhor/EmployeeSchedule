@@ -21,10 +21,14 @@ import com.silentlad.employeemanagement.data.access.EmployeePositionAccess;
 import com.silentlad.employeemanagement.data.access.ScheduleAccess;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -45,7 +49,7 @@ public class ModifyScheduleActivity extends AppCompatActivity {
     private String startTime = "";
     private String endTime = "";
     private String daysOfWeek = "";
-    private HashMap<String, Boolean> daysMap = new HashMap<>();
+    private HashMap<String, Integer> daysMap = new HashMap<>();
 
     private ScheduleAccess scheduleAccess;
     private DayAccess dayAccess;
@@ -80,6 +84,12 @@ public class ModifyScheduleActivity extends AppCompatActivity {
         endTime = getIntent().getStringExtra("endTime");
         String[] days = Objects.requireNonNull(getIntent().getStringExtra("daysOfWeek")).split(", ");
 
+//        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
+
+        for (String day : days) {
+            daysMap.put(day, 1);
+        }
+
         // SET UI ELEMENTS
         nameValue.setText(name);
         positionValue.setText(position);
@@ -87,19 +97,19 @@ public class ModifyScheduleActivity extends AppCompatActivity {
         endTimeValue.setText(endTime);
 
         // FILL IN MAP
-        daysMap.put("sunday", days[0].equals("1"));
-        daysMap.put("monday", days[1].equals("1"));
-        daysMap.put("tuesday", days[2].equals("1"));
-        daysMap.put("wednesday", days[3].equals("1"));
-        daysMap.put("thursday", days[4].equals("1"));
-        daysMap.put("friday", days[5].equals("1"));
-        daysMap.put("saturday", days[6].equals("1"));
+//        daysMap.put("sunday", days[0].equals("1"));
+//        daysMap.put("monday", days[1].equals("1"));
+//        daysMap.put("tuesday", days[2].equals("1"));
+//        daysMap.put("wednesday", days[3].equals("1"));
+//        daysMap.put("thursday", days[4].equals("1"));
+//        daysMap.put("friday", days[5].equals("1"));
+//        daysMap.put("saturday", days[6].equals("1"));
 
         // SET SELECTED DAYS BY USING AN ITERATOR OVER THE DAYS MAP
         ArrayList<MaterialDayPicker.Weekday> weekdays = new ArrayList<>();
 
-        for (HashMap.Entry<String, Boolean> currentItem : daysMap.entrySet()) {
-            if (currentItem.getValue()) {
+        for (HashMap.Entry<String, Integer> currentItem : daysMap.entrySet()) {
+            if (currentItem.getValue() == 1 && !currentItem.getKey().equals("")) {
                 weekdays.add(MaterialDayPicker.Weekday.valueOf(currentItem.getKey().toUpperCase()));
             }
         }
@@ -110,10 +120,7 @@ public class ModifyScheduleActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDayPressed(@NonNull MaterialDayPicker.Weekday weekday, boolean b) {
-                daysMap.replace(weekday.toString().toLowerCase(), b);
-                for (HashMap.Entry<String, Boolean> currentItem : daysMap.entrySet()) {
-                    Log.println(Log.DEBUG, "abc", currentItem.getKey() + currentItem.getValue());
-                }
+                daysMap.put(weekday.toString().toLowerCase(), b ? 1 : 0);
 
             }
         });
@@ -172,13 +179,13 @@ public class ModifyScheduleActivity extends AppCompatActivity {
         String posId = scheduleAccess.getPosId(sId);
         String empId = employeePositionAccess.getEmpId(posId);
 
-        int monday = daysMap.get("monday") ? 1 : 0;
-        int tuesday = daysMap.get("tuesday") ? 1 : 0;
-        int wednesday = daysMap.get("wednesday") ? 1 : 0;
-        int thursday = daysMap.get("thursday") ? 1 : 0;
-        int friday = daysMap.get("friday") ? 1 : 0;
-        int saturday = daysMap.get("saturday") ? 1 : 0;
-        int sunday = daysMap.get("sunday") ? 1 : 0;
+        int monday = daysMap.get("monday");
+        int tuesday = daysMap.get("tuesday");
+        int wednesday = daysMap.get("wednesday");
+        int thursday = daysMap.get("thursday");
+        int friday = daysMap.get("friday");
+        int saturday = daysMap.get("saturday");
+        int sunday = daysMap.get("sunday");
 
         Result result2 = dayAccess.updateDayData(empId, sId, sunday, monday, tuesday, wednesday, thursday, friday, saturday);
 

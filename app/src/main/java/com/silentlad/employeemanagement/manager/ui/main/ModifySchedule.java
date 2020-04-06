@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.silentlad.employeemanagement.R;
+import com.silentlad.employeemanagement.UtilityFunctions;
 import com.silentlad.employeemanagement.data.ModifyScheduleCard;
 import com.silentlad.employeemanagement.data.access.DayAccess;
 import com.silentlad.employeemanagement.data.access.EmployeeAccess;
@@ -35,6 +36,8 @@ public class ModifySchedule extends Fragment {
     private EmployeePositionAccess employeePositionAccess;
     private EmployeeAccess employeeAccess;
     private DayAccess dayAccess;
+
+    private UtilityFunctions utilityFunctions = new UtilityFunctions();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,12 +80,14 @@ public class ModifySchedule extends Fragment {
                 // use empId to get working days
                 int[] daysOfWeekArray = dayAccess.getDaysForSchedule(empId, sId);
                 String daysOfWeekString = "";
+                String daysOfWeekDisplay = "";
 
-                for (int s : daysOfWeekArray) {
+                for (String s : utilityFunctions.getDaysFromInt(daysOfWeekArray)) {
                     daysOfWeekString = daysOfWeekString.concat(s + ", ");
+                    daysOfWeekDisplay = daysOfWeekDisplay.concat(s.substring(0, 3) + ", ");
                 }
 
-                scheduleList.add(new ModifyScheduleCard(sId, daysOfWeekString, startTime,
+                scheduleList.add(new ModifyScheduleCard(sId, daysOfWeekDisplay, daysOfWeekString, startTime,
                         endTime, position, fullName));
             }
         }

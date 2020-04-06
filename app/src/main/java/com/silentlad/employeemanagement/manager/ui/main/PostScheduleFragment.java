@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.silentlad.employeemanagement.R;
+import com.silentlad.employeemanagement.UtilityFunctions;
 import com.silentlad.employeemanagement.data.Result;
 import com.silentlad.employeemanagement.data.access.DayAccess;
 import com.silentlad.employeemanagement.data.access.EmployeeAccess;
@@ -38,6 +39,7 @@ public class PostScheduleFragment extends Fragment {
     private EditText startTime;
     private EditText endTime;
     private MaterialDayPicker dayPicker;
+    private UtilityFunctions utilityFunctions = new UtilityFunctions();
 
     private HashMap<String, Boolean> daysMap = new HashMap<>();
 
@@ -146,23 +148,12 @@ public class PostScheduleFragment extends Fragment {
         return root;
     }
 
-    private String random(int maxLength) {
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder();
-        char tempChar;
-        for (int i = 0; i < maxLength; i++) {
-            tempChar = (char) (random.nextInt(25) + 97);
-            sb.append(tempChar);
-        }
-        return sb.toString();
-    }
-
     private Result postNewSchedule() {
         String posIdValue = posId.getText().toString().trim();
         String empIdValue = empId.getText().toString().trim();
         String startTimeValue = startTime.getText().toString().trim();
         String endTimeValue = endTime.getText().toString().trim();
-        String sId = random(15);
+        String sId = utilityFunctions.random(15);
 
         int monday = daysMap.get("monday") ? 1 : 0;
         int tuesday = daysMap.get("tuesday") ? 1 : 0;
@@ -173,7 +164,7 @@ public class PostScheduleFragment extends Fragment {
         int sunday = daysMap.get("sunday") ? 1 : 0;
 
         Result result1 = scheduleAccess.insertSchedule(sId, posIdValue, startTimeValue, endTimeValue);
-        Result result2 = dayAccess.insertDayData(random(15), empIdValue, sId,
+        Result result2 = dayAccess.insertDayData(utilityFunctions.random(15), empIdValue, sId,
                 sunday, monday, tuesday, wednesday, thursday, friday, saturday
         );
 

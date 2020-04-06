@@ -55,7 +55,7 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ManagerV
     public void onBindViewHolder(@NonNull final ManagerViewHolder holder, int position) {
         final ModifyScheduleCard currentCard = mArrayList.get(position);
 
-        holder.daysOfTheWeek.setText(currentCard.getDaysOfTheWeek());
+        holder.daysOfTheWeek.setText(currentCard.getDaysOfTheWeekDisplay());
         holder.name.setText(currentCard.getName());
         holder.startTime.setText(currentCard.getStartTime());
         holder.endTime.setText(currentCard.getEndTime());
@@ -69,7 +69,7 @@ public class ManagerAdapter extends RecyclerView.Adapter<ManagerAdapter.ManagerV
                 intent.putExtra("position", currentCard.getPosition());
                 intent.putExtra("startTime", currentCard.getStartTime());
                 intent.putExtra("endTime", currentCard.getEndTime());
-                intent.putExtra("daysOfWeek", currentCard.getDaysOfTheWeek());
+                intent.putExtra("daysOfWeek", currentCard.getDaysOfTheWeekActual());
                 intent.putExtra("sId", currentCard.getSId());
                 context.startActivity(intent);
             }

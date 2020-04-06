@@ -2,27 +2,33 @@ package com.silentlad.employeemanagement.data;
 
 public class ModifyScheduleCard {
     private String sId;
-    private String daysOfTheWeek;
+    private String daysOfTheWeekDisplay;
+    private String actualDaysOfTheWeek;
     private String startTime;
     private String endTime;
     private String position;
     private String name;
 
-    public ModifyScheduleCard(String sID, String daysOfTheWeek, String startTime, String endTime, String position, String name) {
+    public ModifyScheduleCard(String sID, String daysOfTheWeekDisplay, String actualDaysOfTheWeek, String startTime, String endTime, String position, String name) {
         this.sId = sID;
-        this.daysOfTheWeek = daysOfTheWeek;
+        this.daysOfTheWeekDisplay = daysOfTheWeekDisplay;
+        this.actualDaysOfTheWeek = actualDaysOfTheWeek;
         this.startTime = startTime;
         this.endTime = endTime;
         this.position = position;
         this.name = name;
     }
 
-    public String getSId(){
+    public String getSId() {
         return sId;
     }
 
-    public String getDaysOfTheWeek() {
-        return daysOfTheWeek;
+    public String getDaysOfTheWeekActual() {
+        return actualDaysOfTheWeek;
+    }
+
+    public String getDaysOfTheWeekDisplay() {
+        return daysOfTheWeekDisplay;
     }
 
     public String getStartTime() {
