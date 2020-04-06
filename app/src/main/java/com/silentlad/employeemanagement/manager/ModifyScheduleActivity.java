@@ -21,15 +21,8 @@ import com.silentlad.employeemanagement.data.access.EmployeePositionAccess;
 import com.silentlad.employeemanagement.data.access.ScheduleAccess;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
@@ -82,6 +75,15 @@ public class ModifyScheduleActivity extends AppCompatActivity {
         position = getIntent().getStringExtra("position");
         startTime = getIntent().getStringExtra("startTime");
         endTime = getIntent().getStringExtra("endTime");
+
+        // FILL IN MAP0)
+        daysMap.put("sunday",0);
+        daysMap.put("monday", 0);
+        daysMap.put("tuesday", 0);
+        daysMap.put("wednesday", 0);
+        daysMap.put("thursday", 0);
+        daysMap.put("friday", 0);
+        daysMap.put("saturday", 0);
         String[] days = Objects.requireNonNull(getIntent().getStringExtra("daysOfWeek")).split(", ");
 
 //        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
@@ -95,15 +97,6 @@ public class ModifyScheduleActivity extends AppCompatActivity {
         positionValue.setText(position);
         startTimeValue.setText(startTime);
         endTimeValue.setText(endTime);
-
-        // FILL IN MAP
-//        daysMap.put("sunday", days[0].equals("1"));
-//        daysMap.put("monday", days[1].equals("1"));
-//        daysMap.put("tuesday", days[2].equals("1"));
-//        daysMap.put("wednesday", days[3].equals("1"));
-//        daysMap.put("thursday", days[4].equals("1"));
-//        daysMap.put("friday", days[5].equals("1"));
-//        daysMap.put("saturday", days[6].equals("1"));
 
         // SET SELECTED DAYS BY USING AN ITERATOR OVER THE DAYS MAP
         ArrayList<MaterialDayPicker.Weekday> weekdays = new ArrayList<>();

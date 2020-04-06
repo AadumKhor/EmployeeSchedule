@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +15,7 @@ import com.silentlad.employeemanagement.R;
 import com.silentlad.employeemanagement.data.access.EmployeePositionAccess;
 import com.silentlad.employeemanagement.data.contracts.EmployeePositionContract;
 import com.silentlad.employeemanagement.employee.EMainActivity;
-import com.silentlad.employeemanagement.manager.MMainActivity;
+import com.silentlad.employeemanagement.manager.ManagerMainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EmployeePositionAccess employeePositionAccess;
@@ -56,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (type.equals("Manager")) {
                     if (checkValidManLogin(idEntered)) {
-                        Intent intent = new Intent(getApplicationContext(), MMainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ManagerMainActivity.class);
                         intent.putExtra("empId", idEntered);
                         startActivity(intent);
                         finish();

@@ -1,8 +1,6 @@
-package com.silentlad.employeemanagement.manager.ui.main;
+package com.silentlad.employeemanagement.manager.main;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +25,6 @@ import com.silentlad.employeemanagement.data.access.ScheduleAccess;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Random;
 
 import ca.antonious.materialdaypicker.MaterialDayPicker;
 

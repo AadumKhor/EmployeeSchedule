@@ -42,4 +42,8 @@
     <string name="delete_schedule">Delete Schedule</string>
     <string name="clock_out">Clock Out</string>
     <string name="clocked_out">Already Clocked Out!</string>
+    <string name="title_activity_manager_main">ManagerMainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
