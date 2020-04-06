@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.silentlad.employeemanagement.R;
@@ -23,9 +25,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        final ActionBar actionBar= getSupportActionBar();
 
         employeePositionAccess = EmployeePositionAccess.getInstance(getApplicationContext());
         final String type = getIntent().getStringExtra("type"); // to get the type of login
+        actionBar.setTitle("Login " + type);
         Button loginButton = findViewById(R.id.login_button);
         final EditText enterId = findViewById(R.id.login_enter_id);
 
@@ -40,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 assert type != null;
-                if (type.equals("emp")) {
+                if (type.equals("Employee")) {
                     if (checkValidEmpLogin(idEntered)) {
                         Intent intent = new Intent(getApplicationContext(), EMainActivity.class);
                         intent.putExtra("empId", idEntered);
@@ -50,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Invalid login!", Toast.LENGTH_LONG).show();
                     }
                 }
-                if (type.equals("man")) {
+                if (type.equals("Manager")) {
                     if (checkValidManLogin(idEntered)) {
                         Intent intent = new Intent(getApplicationContext(), MMainActivity.class);
                         intent.putExtra("empId", idEntered);

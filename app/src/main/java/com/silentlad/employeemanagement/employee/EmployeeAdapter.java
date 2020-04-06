@@ -21,13 +21,9 @@ import java.util.concurrent.TimeUnit;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
     private ArrayList<ScheduleCard> mArrayList;
-    private ActualTimingHelper mTimingHelper;
-    private String mEmpId;
 
-    public EmployeeAdapter(String EmpId, ArrayList<ScheduleCard> arrayList, ActualTimingHelper mTimingHelper) {
+    public EmployeeAdapter(ArrayList<ScheduleCard> arrayList) {
         this.mArrayList = arrayList;
-        this.mTimingHelper = mTimingHelper;
-        this.mEmpId = EmpId;
     }
 
     public static class EmployeeViewHolder extends RecyclerView.ViewHolder {
@@ -56,48 +52,11 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
     @Override
     public void onBindViewHolder(@NonNull final EmployeeViewHolder holder, int position) {
-//        holder.timeOffButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(v.getContext(), "Mail sent to manager.", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-        holder.clockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.clockButton.getText().equals(String.valueOf(R.string.clock_in))) {
-
-                    Result result = mTimingHelper.insertData(mEmpId,
-                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())));
-
-                    if (result instanceof Result.Success) {
-                        Toast.makeText(v.getContext(), "Clocked IN!", Toast.LENGTH_LONG).show();
-                        holder.clockButton.setBackgroundResource(R.color.clockOut);
-                        holder.clockButton.setText(R.string.clock_out);
-                    }else{
-                        Toast.makeText(v.getContext(), "Some error occurred.", Toast.LENGTH_LONG).show();
-                    }
-                }else{
-                    Result result = mTimingHelper.updateData(mEmpId,
-                            String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())));
-
-                    if (result instanceof Result.Success) {
-                        Toast.makeText(holder.itemView.getContext(), "Clocked OUT!", Toast.LENGTH_LONG).show();
-                        holder.clockButton.setBackgroundResource(R.color.clockedOut);
-                        holder.clockButton.setText(R.string.clocked_out);
-                    }else{
-                        Toast.makeText(holder.itemView.getContext(), "Some error occurred.", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        });
         ScheduleCard currentItem = mArrayList.get(position);
 
         holder.dayValue.setText(currentItem.getDayOfWeek());
         holder.startTime.setText(currentItem.getStartTime());
         holder.endTime.setText(currentItem.getEndTime());
-
     }
 
     @Override

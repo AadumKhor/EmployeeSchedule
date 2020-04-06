@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.silentlad.employeemanagement.data.Result;
+import com.silentlad.employeemanagement.data.contracts.DayTableContract;
 import com.silentlad.employeemanagement.data.openHelpers.DayOpenHelper;
 import com.silentlad.employeemanagement.data.contracts.DayTableContract.*;
 
@@ -40,21 +41,25 @@ public class DayAccess {
         this.db.close();
     }
 
-    public String[] getDaysForSchedule(String empId, String sId) {
+    public int[] getDaysForSchedule(String empId, String sId) {
         this.db = openHelper.getReadableDatabase();
-        String query = "SELECT * FROM " + DayTableEntry.TABLE_NAME + " WHERE empId=? AND sId=?";
+        String query = "SELECT sunday,monday,tuesday,wednesday,thursday,friday,saturday FROM " + DayTableEntry.TABLE_NAME + " WHERE empId=? AND sId=?";
         Cursor cursor = db.rawQuery(query, new String[]{empId, sId});
 
-        String[] result = new String[7];
+        int[] result = new int[7];
 
         while (cursor.moveToNext()) {
-            result[0] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SUN));
-            result[1] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_MON));
-            result[2] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_TUE));
-            result[3] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_WED));
-            result[4] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_THU));
-            result[5] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_FRI));
-            result[6] = cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SAT));
+            result[0] = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SUN)));
+            result[1] = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_MON)));
+            result[2] = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_TUE)));
+            result[3] = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_WED)));
+            result[4] = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_THU)));
+            result[5] = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_FRI)));
+            result[6] = Integer.parseInt(cursor.getString(cursor.getColumnIndex(DayTableEntry.COLUMN_SAT)));
+        }
+
+        for(int i = 0 ; i < 7 ; i++){
+            Log.println(Log.DEBUG, "def", String.valueOf(result[i]));
         }
 
         cursor.close();
@@ -71,25 +76,21 @@ public class DayAccess {
 
         if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
-                Log.println(Log.DEBUG, "getScheduleAndDay", cursor.getString(cursor.getColumnIndex(dayValue)));
                 if (cursor.getString(cursor.getColumnIndex(dayValue)).equals("1")) {
                     map.put(cursor.getString(cursor.getColumnIndex("sId")),
                             String.valueOf(cursor.getString(cursor.getColumnIndex(dayValue))));
                 }
             }
         }
-        Log.println(Log.DEBUG, "getScheduleAndDay", String.valueOf(map.size()));
         cursor.close();
         return map;
     }
 
-    public Result updateDayData(String empId, String sId, boolean sunday, boolean monday, boolean tuesday, boolean wednesday,
-                                boolean thursday, boolean friday, boolean saturday) {
+    public Result updateDayData(String empId, String sId, int sunday, int monday, int tuesday, int wednesday,
+                                int thursday, int friday, int saturday) {
         this.db = openHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(DayTableEntry.COLUMN_EMP_ID, empId);
-        cv.put("sId", sId);
         cv.put(DayTableEntry.COLUMN_SUN, sunday);
         cv.put(DayTableEntry.COLUMN_MON, monday);
         cv.put(DayTableEntry.COLUMN_TUE, tuesday);
@@ -99,7 +100,7 @@ public class DayAccess {
         cv.put(DayTableEntry.COLUMN_SAT, saturday);
 
         try {
-            int i = db.update(DayTableEntry.TABLE_NAME, cv, "sId=? AND empId=?", new String[]{empId, sId});
+            int i = db.update(DayTableEntry.TABLE_NAME, cv, "sId=? AND empId=?", new String[]{sId, empId});
             return new Result.Success<>(String.valueOf(i));
         } catch (Exception e) {
             return new Result.Error(new IOException(e.toString()));
@@ -116,8 +117,8 @@ public class DayAccess {
         }
     }
 
-    public Result insertDayData(String dId, String empId, String sId, boolean sunday, boolean monday, boolean tuesday, boolean wednesday,
-                                boolean thursday, boolean friday, boolean saturday) {
+    public Result insertDayData(String dId, String empId, String sId, int sunday, int monday, int tuesday, int wednesday,
+                                int thursday, int friday, int saturday) {
         this.db = openHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
 

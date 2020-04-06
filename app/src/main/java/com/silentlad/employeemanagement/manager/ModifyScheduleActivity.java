@@ -99,16 +99,10 @@ public class ModifyScheduleActivity extends AppCompatActivity {
         ArrayList<MaterialDayPicker.Weekday> weekdays = new ArrayList<>();
 
         for (HashMap.Entry<String, Boolean> currentItem : daysMap.entrySet()) {
-            Log.println(Log.DEBUG, "for looop", currentItem.getValue() + currentItem.getKey());
             if (currentItem.getValue()) {
-                Log.println(Log.DEBUG, "edit schedule", "Inside if");
                 weekdays.add(MaterialDayPicker.Weekday.valueOf(currentItem.getKey().toUpperCase()));
-                Log.println(Log.DEBUG, "edit schedule", String.valueOf(weekdays.size()));
             }
         }
-        Log.println(Log.DEBUG, "edit schedule", String.valueOf(weekdays.size()));
-        Log.println(Log.DEBUG, "edit schedule", String.valueOf(MaterialDayPicker.Weekday.valueOf("SUNDAY")));
-        Log.println(Log.DEBUG, "edit schedule", String.valueOf(weekdays.size()));
 
         dayPicker.setSelectedDays(weekdays);
 
@@ -117,7 +111,10 @@ public class ModifyScheduleActivity extends AppCompatActivity {
             @Override
             public void onDayPressed(@NonNull MaterialDayPicker.Weekday weekday, boolean b) {
                 daysMap.replace(weekday.toString().toLowerCase(), b);
-                Log.println(Log.DEBUG, "edit schedule", weekday.toString().toLowerCase() + daysMap.get(weekday.toString().toLowerCase()));
+                for (HashMap.Entry<String, Boolean> currentItem : daysMap.entrySet()) {
+                    Log.println(Log.DEBUG, "abc", currentItem.getKey() + currentItem.getValue());
+                }
+
             }
         });
 
@@ -175,10 +172,15 @@ public class ModifyScheduleActivity extends AppCompatActivity {
         String posId = scheduleAccess.getPosId(sId);
         String empId = employeePositionAccess.getEmpId(posId);
 
-        Result result2 = dayAccess.updateDayData(empId, sId, daysMap.get("sunday"), daysMap.get("monday"),
-                daysMap.get("tuesday"), daysMap.get("wednesday"), daysMap.get("thursday"),
-                daysMap.get("friday"), daysMap.get("saturday"));
+        int monday = daysMap.get("monday") ? 1 : 0;
+        int tuesday = daysMap.get("tuesday") ? 1 : 0;
+        int wednesday = daysMap.get("wednesday") ? 1 : 0;
+        int thursday = daysMap.get("thursday") ? 1 : 0;
+        int friday = daysMap.get("friday") ? 1 : 0;
+        int saturday = daysMap.get("saturday") ? 1 : 0;
+        int sunday = daysMap.get("sunday") ? 1 : 0;
 
+        Result result2 = dayAccess.updateDayData(empId, sId, sunday, monday, tuesday, wednesday, thursday, friday, saturday);
 
         if (result1 instanceof Result.Success && result2 instanceof Result.Success) {
             Log.println(Log.DEBUG, "result", (String) ((Result.Success) result2).getData());

@@ -75,10 +75,10 @@ public class ModifySchedule extends Fragment {
                 String fullName = employeeAccess.getName(empId.trim());
 
                 // use empId to get working days
-                String[] daysOfWeekArray = dayAccess.getDaysForSchedule(empId, sId);
+                int[] daysOfWeekArray = dayAccess.getDaysForSchedule(empId, sId);
                 String daysOfWeekString = "";
 
-                for (String s : daysOfWeekArray) {
+                for (int s : daysOfWeekArray) {
                     daysOfWeekString = daysOfWeekString.concat(s + ", ");
                 }
 

@@ -54,13 +54,13 @@ public class AddEmployee extends Fragment {
         dayAccess = DayAccess.getInstance(getContext());
         scheduleAccess = ScheduleAccess.getInstance(getContext());
 
-        daysMap.put("sunday",false);
-        daysMap.put("monday",false);
-        daysMap.put("tuesday",false);
-        daysMap.put("wednesday",false);
-        daysMap.put("thursday",false);
-        daysMap.put("friday",false);
-        daysMap.put("saturday",false);
+        daysMap.put("sunday", false);
+        daysMap.put("monday", false);
+        daysMap.put("tuesday", false);
+        daysMap.put("wednesday", false);
+        daysMap.put("thursday", false);
+        daysMap.put("friday", false);
+        daysMap.put("saturday", false);
 
         firstName = root.findViewById(R.id.edit_full_name_value);
         lastName = root.findViewById(R.id.edit_position_value);
@@ -106,11 +106,11 @@ public class AddEmployee extends Fragment {
     }
 
     private void addDataToDb() throws ParseException {
-        final String fName = firstName.getText().toString();
-        final String lName = lastName.getText().toString();
-        final String pos = position.getText().toString();
-        final String sTime = Objects.requireNonNull(timeFormat.parse(startTime.getText().toString())).toString().split(" ")[3];
-        final String eTime = Objects.requireNonNull(timeFormat.parse(endTime.getText().toString())).toString().split(" ")[3];
+        final String fName = firstName.getText().toString().trim();
+        final String lName = lastName.getText().toString().trim();
+        final String pos = position.getText().toString().trim();
+        final String sTime = Objects.requireNonNull(timeFormat.parse(startTime.getText().toString())).toString().split(" ")[3].trim();
+        final String eTime = Objects.requireNonNull(timeFormat.parse(endTime.getText().toString())).toString().split(" ")[3].trim();
 
         boolean isDataValid = !fName.equals("") && !lName.equals("") && !pos.equals("")
                 && !sTime.equals("") && !eTime.equals("");
@@ -119,12 +119,19 @@ public class AddEmployee extends Fragment {
             String empId = random(6);
             String posId = random(8);
             String sId = random(15);
+
+            int monday = daysMap.get("monday") ? 1 : 0;
+            int tuesday = daysMap.get("tuesday") ? 1 : 0;
+            int wednesday = daysMap.get("wednesday") ? 1 : 0;
+            int thursday = daysMap.get("thursday") ? 1 : 0;
+            int friday = daysMap.get("friday") ? 1 : 0;
+            int saturday = daysMap.get("saturday") ? 1 : 0;
+            int sunday = daysMap.get("sunday") ? 1 : 0;
+
             Result result1 = employeeAccess.insertNewEmployee(empId, fName, lName);
             Result result2 = employeePositionAccess.insertData(posId, empId, pos);
-            Result result3 = dayAccess.insertDayData(random(15), empId,sId,
-                    daysMap.get("sunday"), daysMap.get("monday"), daysMap.get("tuesday"),
-                    daysMap.get("wednesday"), daysMap.get("thursday")
-                    , daysMap.get("friday"), daysMap.get("saturday"));
+            Result result3 = dayAccess.insertDayData(random(15), empId, sId, sunday, monday, tuesday,
+                    wednesday, thursday, friday, saturday);
             Result result4 = scheduleAccess.insertSchedule(sId, posId, sTime, eTime);
 
             if (result1 instanceof Result.Success && result2 instanceof Result.Success

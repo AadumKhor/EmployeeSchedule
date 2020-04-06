@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.silentlad.employeemanagement.R;
+import com.silentlad.employeemanagement.data.Result;
 import com.silentlad.employeemanagement.data.ScheduleCard;
 import com.silentlad.employeemanagement.data.access.DayAccess;
 import com.silentlad.employeemanagement.data.access.EmployeeAccess;
@@ -30,11 +32,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class EMainActivity extends AppCompatActivity {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-    private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
 
     private ArrayList<ScheduleCard> arrayList = new ArrayList<>();
     private EmployeeAdapter adapter;
@@ -51,6 +53,8 @@ public class EMainActivity extends AppCompatActivity {
     private DayAccess dayAccess;
     private ActualTimingHelper timingHelper;
 
+    long firstDayLong = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +64,7 @@ public class EMainActivity extends AppCompatActivity {
         empId = getIntent().getStringExtra("empId");
 
         timingHelper = new ActualTimingHelper(this);
-        adapter = new EmployeeAdapter(empId, arrayList, timingHelper);
+        adapter = new EmployeeAdapter(arrayList);
 
 
         // ACTION BAR ACTIVATION AND TEXT
@@ -89,11 +93,14 @@ public class EMainActivity extends AppCompatActivity {
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-                if (dateClicked.getTime() >= System.currentTimeMillis()) {
+                adapter.notifyDataSetChanged();
+                date = dateFormat.format(dateClicked);
+                actionBar.setTitle("Employee Schedule - " + date);
+
+                firstDayLong = dateClicked.getTime();
+                long now = System.currentTimeMillis();
+                if (firstDayLong - now >= 86399999) {
                     arrayList.clear();
-                    adapter.notifyDataSetChanged();
-                    date = dateFormat.format(dateClicked);
-                    actionBar.setTitle("Employee Schedule - " + date);
                     SimpleDateFormat format = new SimpleDateFormat("EEEE", Locale.US);
                     String dayValue = "";
                     try {
@@ -124,13 +131,14 @@ public class EMainActivity extends AppCompatActivity {
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-                long firstDayLong = firstDayOfNewMonth.getTime();
+                adapter.notifyDataSetChanged();
+                date = dateFormat.format(firstDayOfNewMonth);
+                actionBar.setTitle("Employee Schedule - " + date);
+
+                firstDayLong = firstDayOfNewMonth.getTime();
                 long now = System.currentTimeMillis();
                 if (firstDayLong - now >= 86399999) {
                     arrayList.clear();
-                    adapter.notifyDataSetChanged();
-                    date = dateFormat.format(firstDayOfNewMonth);
-                    actionBar.setTitle("Employee Schedule - " + date);
                     SimpleDateFormat format = new SimpleDateFormat("EEEE", Locale.US);
                     String dayValue = "";
                     try {
@@ -184,13 +192,35 @@ public class EMainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    private void createList(String dayValue) {
-        Cursor cursor = scheduleAccess.getDataForPosition(posId);
+    public void enterOrUpdateTime(View v) {
+        Button clock = v.findViewById(R.id.schedule_clock);
+        if (firstDayLong > System.currentTimeMillis()) {
+            clock.setBackgroundResource(R.color.clockedOut);
+            Toast.makeText(getApplicationContext(), "Can't clock future time!", Toast.LENGTH_LONG).show();
+        } else {
+            if (clock.getText().toString().equals("Clock In")) {
+                Result result = timingHelper.insertData(empId,
+                        String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())));
 
-        if (cursor.getCount() != 0) {
-            arrayList.add(new ScheduleCard(dayValue,
-                    cursor.getString(2),
-                    cursor.getString(3)));
+                if (result instanceof Result.Success) {
+                    Toast.makeText(getApplicationContext(), "Clocked IN!", Toast.LENGTH_LONG).show();
+                    clock.setBackgroundResource(R.color.clockOut);
+                    clock.setText(R.string.clock_out);
+                } else {
+                    Toast.makeText(v.getContext(), "Some error occurred.", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Result result = timingHelper.updateData(empId,
+                        String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())));
+
+                if (result instanceof Result.Success) {
+                    Toast.makeText(getApplicationContext(), "Clocked OUT!", Toast.LENGTH_LONG).show();
+                    clock.setBackgroundResource(R.color.clockedOut);
+                    clock.setText(R.string.clocked_out);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Some error occurred.", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 

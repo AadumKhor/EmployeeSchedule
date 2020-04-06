@@ -189,16 +189,16 @@
         app:layout_constraintTop_toBottomOf="@+id/edit_start_time"
         app:layout_constraintVertical_bias="0.05" />
 
-<!--    <ca.antonious.materialdaypicker.MaterialDayPicker-->
-<!--        android:id="@+id/materialDayPicker"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="1.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/add_emp_end_time_edit"-->
-<!--        app:layout_constraintVertical_bias="0.1" />-->
+    <ca.antonious.materialdaypicker.MaterialDayPicker
+        android:id="@+id/materialDayPicker"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_end_time"
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/post_schedule_button"
@@ -213,6 +213,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_end_time"
+        app:layout_constraintTop_toBottomOf="@+id/materialDayPicker"
         app:layout_constraintVertical_bias="0.3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
