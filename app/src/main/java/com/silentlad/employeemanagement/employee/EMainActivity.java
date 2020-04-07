@@ -23,6 +23,7 @@ import com.silentlad.employeemanagement.data.access.EmployeePositionAccess;
 import com.silentlad.employeemanagement.data.access.ScheduleAccess;
 import com.silentlad.employeemanagement.data.contracts.EmployeePositionContract;
 import com.silentlad.employeemanagement.data.dbhelpers.ActualTimingHelper;
+import com.silentlad.employeemanagement.data.dbhelpers.NotificationsHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,7 +36,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class EMainActivity extends AppCompatActivity {
-
+    NotificationsHelper notificationsHelper;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
     private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
     private ArrayList<ScheduleCard> arrayList = new ArrayList<>();
@@ -82,12 +84,17 @@ public class EMainActivity extends AppCompatActivity {
         employeePositionAccess = EmployeePositionAccess.getInstance(getApplicationContext());
         scheduleAccess = ScheduleAccess.getInstance(getApplicationContext());
         dayAccess = DayAccess.getInstance(getApplicationContext());
+        notificationsHelper = new NotificationsHelper(EMainActivity.this);
         getFullNameAndPosId();
+
+        Toast.makeText(getApplicationContext(), "Welcome " + fullName, Toast.LENGTH_SHORT).show();
 //        fillDaysMaps();
 
         // SET GREETING TEXT
         TextView greetings = findViewById(R.id.greeting_text);
         greetings.setText(String.format("Hi! %s. Position : %s", fullName, position));
+
+        createInitialList();
 
         // CALENDER WORKING
         calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
@@ -99,16 +106,14 @@ public class EMainActivity extends AppCompatActivity {
 
                 firstDayLong = dateClicked.getTime();
                 long now = System.currentTimeMillis();
-                if (firstDayLong - now >= 86399999) {
+
+                if (firstDayLong - now >= 86400000 || firstDayLong - now >= -86399999) {
                     arrayList.clear();
                     SimpleDateFormat format = new SimpleDateFormat("EEEE", Locale.US);
                     String dayValue = "";
-                    try {
-                        dayValue = Objects.requireNonNull(format.format(dateClicked));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    Log.println(Log.DEBUG, "getScheduleAndDay", dayValue.toLowerCase());
+
+                    dayValue = Objects.requireNonNull(format.format(dateClicked));
+
                     daysMaps = dayAccess.getScheduleIdAndDayValue(empId, dayValue.toLowerCase());
 
                     if (daysMaps.size() > 0) {
@@ -146,7 +151,6 @@ public class EMainActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    Log.println(Log.DEBUG, "getScheduleAndDay", dayValue.toLowerCase());
                     daysMaps = dayAccess.getScheduleIdAndDayValue(empId, dayValue.toLowerCase());
 
                     if (daysMaps.size() > 0) {
@@ -190,6 +194,50 @@ public class EMainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    private void createInitialList() {
+        SimpleDateFormat format = new SimpleDateFormat("EEEE", Locale.US);
+        String dayValue = "";
+
+        dayValue = Objects.requireNonNull(format.format(Calendar.getInstance().getTime()));
+        Log.println(Log.DEBUG, "getScheduleAndDay", dayValue.toLowerCase());
+        daysMaps = dayAccess.getScheduleIdAndDayValue(empId, dayValue.toLowerCase());
+
+        if (daysMaps.size() > 0) {
+            for (HashMap.Entry<String, String> currentItem : daysMaps.entrySet()) {
+                String startTime = scheduleAccess.getScheduleWithScheduleId(currentItem.getKey())[0];
+                String endTime = scheduleAccess.getScheduleWithScheduleId(currentItem.getKey())[1];
+
+                arrayList.add(new ScheduleCard(dayValue, startTime, endTime));
+                adapter.notifyDataSetChanged();
+            }
+        } else {
+            arrayList.clear();
+            adapter.notifyDataSetChanged();
+        }
+
+    }
+
+    public void notifyManager(View v) {
+        Button timeOffButton = v.findViewById(R.id.schedule_time_off);
+
+        timeOffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean alreadyExists = notificationsHelper.checkIfExists(empId, sdf.format(new Date().getTime())) != null;
+                if (!alreadyExists) {
+                    Result result = notificationsHelper.insertData(empId);
+
+                    if (result instanceof Result.Success) {
+                        Toast.makeText(getApplicationContext(), "Notified Manager!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Some error occurred!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+
     }
 
     public void enterOrUpdateTime(View v) {

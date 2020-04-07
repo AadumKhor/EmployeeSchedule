@@ -145,6 +145,7 @@
                 android:layout_weight="1"
                 android:background="@color/buttonColor"
                 android:text="@string/time_off"
+                android:onClick="notifyManager"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"

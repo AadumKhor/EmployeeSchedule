@@ -59,6 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                         intent.putExtra("empId", idEntered);
                         startActivity(intent);
                         finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Invalid login!", Toast.LENGTH_LONG).show();
                     }
                 }
             }

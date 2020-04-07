@@ -22,6 +22,7 @@
         app:compactCalendarBackgroundColor="@android:color/white"
         app:compactCalendarCurrentDayBackgroundColor="@color/colorAccent"
         app:compactCalendarCurrentDayTextColor="@android:color/black"
+        app:compactCalendarCurrentSelectedDayTextColor="@android:color/white"
         app:compactCalendarCurrentSelectedDayBackgroundColor="@color/colorPrimaryDark"
         app:compactCalendarTargetHeight="300dp"
         app:compactCalendarTextColor="#000000"
