@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.silentlad.employeemanagement"
+        applicationId "com.ninam.employeemanagement"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1

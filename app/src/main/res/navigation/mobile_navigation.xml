@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.silentlad.employeemanagement.manager.main.ModifySchedule"
+        android:name="com.ninam.employeemanagement.manager.main.ModifySchedule"
         android:label="@string/modify_tab"
         tools:layout="@layout/fragment_modify_schedule" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.silentlad.employeemanagement.manager.main.PostScheduleFragment"
+        android:name="com.ninam.employeemanagement.manager.main.PostScheduleFragment"
         android:label="@string/post_tab"
         tools:layout="@layout/fragment_post_schedule" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.silentlad.employeemanagement.manager.main.AddEmployee"
+        android:name="com.ninam.employeemanagement.manager.main.AddEmployee"
         android:label="@string/add_employee"
         tools:layout="@layout/fragment_add_employee" />
 </navigation>

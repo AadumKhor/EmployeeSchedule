@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.silentlad.employeemanagement">
+    package="com.ninam.employeemanagement">
 
     <application
         android:allowBackup="false"
@@ -10,23 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".manager.ManagerMainActivity"
-            android:label="@string/title_activity_manager_main"></activity>
-        <activity android:name=".manager.ModifyScheduleActivity" />
+            android:name="com.ninam.employeemanagement.manager.ManagerMainActivity"
+            android:label="@string/title_activity_manager_main" />
+        <activity android:name="com.ninam.employeemanagement.manager.ModifyScheduleActivity" />
         <activity
-            android:name=".manager.MNotificationsActivity"
+            android:name="com.ninam.employeemanagement.manager.MNotificationsActivity"
             android:label="Employee Notifications" />
         <activity
             android:name=".manager.MMainActivity"
             android:label="Manage Schedules"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".employee.EMainActivity" />
+        <activity android:name="com.ninam.employeemanagement.employee.EMainActivity" />
         <activity
-            android:name=".login.LoginActivity"
+            android:name="com.ninam.employeemanagement.login.LoginActivity"
             android:label="@string/login" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.ninam.employeemanagement.MainActivity"
             android:label="@string/main_label"
             android:screenOrientation="nosensor">
             <intent-filter>
